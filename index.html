@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://underscorejs.org/underscore.js"></script>
+    <script src="http://backbonejs.org/backbone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.16/backbone.localStorage.js" integrity="sha512-oa3LKy/49HL0lFf16BCfZ5IkozDdLpzgLjp/puGQW7MvvowMuaW8E98tLDRr4FPTo2PmtiyPXCBrPEaDt/6U/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+
+    <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title>Create Coffee App</title>
+  </head>
+  <body>
+    <header >
+      <h1 class="title">База пользователей</h1>
+    </header>
+    <section id="app" class="section">
+      <section id="main" class="container block">
+        <div class="box">
+          <div class="block" id="add-row">
+          </div>
+          <table class="table block">
+            <tbody>
+              <th>Имя</th>
+              <th>Телефон</th>
+              <th></th>
+            </tbody>
+            <tbody id="user-list">
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <script type="text/template" id="nodata-template">
+      <tr class="nodata">
+        <td colspan="3">в данный момент данных нет, добавьте новых пользователей</td>
+      </tr>
+    </script>
+
+    <script type="text/template" id="addrow-template">
+      <div>
+        <% if (!edit) { %>
+        <button class="button is-link add">
+          <span>Добавить пользователя</span>
+          <span class="icon is-small">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </span>
+        </button>
+        <% } else { %>
+        <div class="field is-grouped is-vcentered">
+          <label class="label label-add">Имя</label>
+          <p class="control is-expanded">
+            <input class="input <%= err.name ? 'is-danger' : '' %>" type="text" name="name" value="<%- name %>" placeholder="Иван">
+          </p>
+          <% if (err.name) { %><p class="help is-danger"><%- err.name %></p><% } %>
+          <label class="label label-add">Телефон</label>
+          <p class="control is-expanded">
+            <input class="input <%= err.phone ? 'is-danger' : '' %>" type="text" name="phone" value="<%- phone %>" type="tel" placeholder="+0-999-111-2222">
+          </p>
+          <% if (err.phone) { %><p class="help is-danger"><%- err.phone %></p><% } %>
+          <p class="control">
+            <button class="button is-primary save">
+              Добавить
+            </button>
+            <button class="button is-light cancel">
+              Отмена
+            </button>
+          </p>
+        </div>
+        <% } %>
+      </div>
+    </script>
+
+    <script type="text/template" id="item-template">
+        <td>
+          <% if (edit) { %>
+          <input class="input is-small <%= err.name ? 'is-danger' : '' %>" name="name" value="<%- name %>">
+          <% if (err.name) { %><p class="help is-danger"><%- err.name %></p><% } %>
+          <% } else { %>
+          <%- name %>
+          <% } %>
+        </td>
+        <td>
+          <% if (edit) { %>
+            <input class="input is-small <%= err.phone ? 'is-danger' : '' %>" name="phone" value="<%- phone %>">
+            <% if (err.phone) { %><p class="help is-danger"><%- err.phone %></p><% } %>
+            <% } else { %>
+            <%- phone %>
+          <% } %>
+        </td>
+        <td>
+          <% if (edit) { %>
+            <button class="button is-primary is-small save">
+              <span>Сохранить</span>
+              <span class="icon is-small">
+                <ion-icon name="save-outline"></ion-icon>
+              </span>
+            </button>
+          <% } else { %>
+            <button class="button is-link is-small edit">
+              <span>Редактировать</span>
+              <span class="icon is-small">
+                <ion-icon name="pencil-outline"></ion-icon>
+              </span>
+            </button>
+          <% } %>
+          <% if (edit) { %>
+            <button class="button is-light is-small cancel">
+              <span>Отмена</span>
+            </button>
+          <% } else { %>
+            <button class="button is-danger is-small destroy">
+              <span>Стереть</span>
+              <span class="icon is-small">
+                <ion-icon name="trash-outline"></ion-icon>
+              </span>
+            </button>
+          <% } %>
+        </td>
+    </script>
+
+    <script type="module" src="/src/main.js"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>
